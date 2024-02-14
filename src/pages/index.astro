@@ -1,0 +1,169 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+// import Card from '../components/Card.astro';
+import cyn_dark from '../assets/images/cyn_dark.webp';
+import cyn_light from '../assets/images/cyn_light.webp';
+---
+
+<Layout title="Inicio">
+  <main class="m-auto mt-16 md:mt-24">
+    <div
+      class="flex flex-col md:flex-row items-center gap-10 sm:gap-6 md:gap-8">
+      <div class="flex flex-col items-start gap-8">
+        <h1 class="text-start text-[3.5rem] md:text-[4rem]">
+          ¡Vamos a hacer <span class="text-gradient">ciencia!</span>
+        </h1>
+        <section
+          class="link-svgline stroke-[rgb(var(--accent-dark))] dark:stroke-[rgb(var(--accent))]">
+          <p class="text-balance">
+            Flexágono nace con la finalidad de motivar a los alumnos en el
+            ámbito científico. Quieres saber más? ¡Descubre la
+            <a href="/" class="relative inline-block cursor-pointer">
+              metodología
+              <svg class="link-svgline fill-none"
+                ><use xlink:href="#svg_line"></use></svg
+              >
+            </a>!
+          </p>
+        </section>
+      </div>
+      <Image
+        id="cyn_dark"
+        src={cyn_dark}
+        alt="Imagen de Cynthia"
+        class="hidden bg-cover mx-auto w-full md:w-[35%]"
+      />
+      <Image
+        id="cyn_light"
+        src={cyn_light}
+        alt="Imagen de Cynthia"
+        class="hidden bg-cover mx-auto w-full md:w-[35%]"
+      />
+    </div>
+  </main>
+  <!-- SVG ELEMENT -->
+  <div class="absolute w-0 h-0 overflow-hidden">
+    <svg viewBox="0 0 400 20" xmlns="http://www.w3.org/2000/svg">
+      <path
+        id="svg_line"
+        d="m 1.986,8.91 c 55.429038,4.081 111.58111,5.822 167.11781,2.867 22.70911,-1.208 45.39828,-0.601 68.126,-0.778 28.38173,-0.223 56.76079,-1.024 85.13721,-1.33 24.17379,-0.261 48.42731,0.571 72.58115,0.571"
+      ></path>
+    </svg>
+  </div>
+</Layout>
+
+<script is:inline>
+  function setImage() {
+    if (document.body.classList.contains('dark')) {
+      document.getElementById('cyn_dark').style.display = 'block';
+      document.getElementById('cyn_light').style.display = 'none';
+    } else {
+      document.getElementById('cyn_dark').style.display = 'none';
+      document.getElementById('cyn_light').style.display = 'block';
+    }
+  }
+
+  setImage();
+
+  // Execute setImage() after Astro swaps the page
+  document.addEventListener('astro:after-swap', () => {
+    setImage();
+  });
+</script>
+
+<!-- <p class="instructions">
+      To get started, open the directory <code>src/pages</code> in your project.<br
+      />
+      <strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+    </p>
+    <ul role="list" class="link-card-grid">
+      <Card
+        href="https://docs.astro.build/"
+        title="Documentation"
+        body="Learn how Astro works and explore the official API docs."
+      />
+      <Card
+        href="https://astro.build/integrations/"
+        title="Integrations"
+        body="Supercharge your project with new frameworks and libraries."
+      />
+      <Card
+        href="https://astro.build/themes/"
+        title="Themes"
+        body="Explore a galaxy of community-built starter themes."
+      />
+      <Card
+        href="https://astro.build/chat/"
+        title="Community"
+        body="Come say hi to our amazing Discord community. ❤️"
+      />
+    </ul> -->
+
+<style>
+  main {
+    width: 1200px;
+    max-width: calc(100% - 2rem);
+    /* color: white; */
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-weight: 600;
+    line-height: 1;
+  }
+  .text-gradient {
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400%;
+    background-position: 0%;
+  }
+  /* SVG */
+  .link-svgline svg.link-svgline {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    overflow: hidden;
+    margin: 0;
+    width: 100%;
+    height: 20px;
+    transition: stroke-dashoffset 0.3s ease-in-out;
+    transform: translateY(-85%);
+    /* fill: none; */
+    stroke-width: 4;
+    stroke-dasharray: 400px;
+    stroke-dashoffset: 400px;
+  }
+  .link-svgline a:hover svg.link-svgline {
+    stroke-dashoffset: 0px;
+  }
+  /* FINISH SVG */
+  .instructions {
+    margin-bottom: 2rem;
+    border: 1px solid rgba(var(--accent-light), 25%);
+    background: linear-gradient(
+      rgba(var(--accent-dark), 66%),
+      rgba(var(--accent-dark), 33%)
+    );
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  .instructions code {
+    font-size: 0.8em;
+    font-weight: bold;
+    background: rgba(var(--accent-light), 12%);
+    color: rgb(var(--accent-light));
+    border-radius: 4px;
+    padding: 0.3em 0.4em;
+  }
+  .instructions strong {
+    color: rgb(var(--accent-light));
+  }
+  .link-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+    gap: 2rem;
+    padding: 0;
+  }
+</style>

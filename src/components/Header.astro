@@ -1,0 +1,58 @@
+---
+import DarkMode from './DarkMode.astro';
+import ResponsiveToggle from './ResponsiveToggle.astro';
+import Logo from '../assets/images/logo.webp';
+
+const menuItems = [
+  { name: 'Inicio', url: '/' },
+  { name: 'Metodología', url: '/metodologia' },
+  { name: 'Contacto', url: '/contacto' },
+];
+---
+
+<div
+  class="max-w-screen-xl mx-auto flex p-4 justify-between items-center flex-wrap">
+  <a href="/" class="flex items-center gap-2">
+    <span class="dark:bg-white dark:bg-opacity-20 p-1 dark:rounded-full">
+      <img src={Logo.src} width="32px" height="32px" />
+    </span>
+    <p class="text-3xl">Flexágono</p>
+  </a>
+  <div class="space-x-4 flex">
+    <div class="nav-menu space-x-4 md:flex md:flex-row hidden items-center">
+      {menuItems.map((item) => <a href={item.url}>{item.name}</a>)}
+    </div>
+    <ResponsiveToggle />
+    <DarkMode />
+  </div>
+  <div
+    id="menu-mobile"
+    class="nav-menu hidden flex-col space-y-3 basis-full relative mt-6 md:hidden">
+    {
+      menuItems.map((item) => (
+        <a href={item.url} class="text-lg">
+          {item.name}
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const menus = document.getElementsByClassName('nav-menu');
+    [...menus].map((menu) => {
+      const items = menu.getElementsByTagName('a');
+      const currentUrl = window.location.pathname;
+
+      [...items].map((item) => {
+        const url = new URL(item.href);
+        if (url.pathname === currentUrl) {
+          item.classList.add('font-medium');
+          item.classList.add('underline');
+          item.classList.add('decoration-wavy');
+        }
+      });
+    });
+  });
+</script>
